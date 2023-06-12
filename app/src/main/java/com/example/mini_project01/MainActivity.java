@@ -30,8 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == loadusers){
+            InputStream inputStream = getResources().openRawResource(R.raw.users);
+            try {
 
-            Toast.makeText(this, "loud users", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, Character.toString((char)inputStream.read()), Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (v.getId() == R.id.quit) {
             finish();
         }
