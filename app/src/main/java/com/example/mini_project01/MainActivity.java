@@ -30,13 +30,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == loadusers){
-            InputStream inputStream = getResources().openRawResource(R.raw.users);
-            try {
 
-                Toast.makeText(this, Character.toString((char)inputStream.read()), Toast.LENGTH_SHORT).show();
+            try {
+                InputStream inputStream = getAssets().open("users.json");
+
+                int code ;
+
+                StringBuilder stringBuilder = new StringBuilder();
+                String jsonString;
+                code = inputStream.read();
+                while (code != -1){
+                    stringBuilder.append((char)code);
+
+                    code = inputStream.read();
+                }
+                jsonString = stringBuilder.toString();
+                Toast.makeText(this, jsonString, Toast.LENGTH_SHORT).show();
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
+
+
         } else if (v.getId() == R.id.quit) {
             finish();
         }
