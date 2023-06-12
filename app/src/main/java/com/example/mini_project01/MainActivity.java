@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,14 +50,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     code = inputStream.read();
                 }
                 jsonString = stringBuilder.toString();
-                Toast.makeText(this, jsonString, Toast.LENGTH_SHORT).show();
+                
+                JSONObject jsonObject = new JSONObject(jsonString);
+//                JSONArray jsonArray = (JSONArray) jsonObject.get("users") ;
+                JSONArray jsonArray =jsonObject.getJSONArray("users") ;
+//                Toast.makeText(this,Integer.toString(jsonArray.length())  , Toast.LENGTH_SHORT).show();
+                StringBuilder stringBuilderFullname = new StringBuilder();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject user = jsonArray.getJSONObject(i);
+                    JSONObject username = user.getJSONObject("name");
+                    String fullname = String.format("%s %S\n", username.get("first"), username.get("last"));
+                    stringBuilderFullname.append(fullname);
+                    Toast.makeText(this, stringBuilderFullname, Toast.LENGTH_SHORT).show();
+//                    Log.e("TAG", fullname );
+                }
+                
 
 
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-
-
 
 
         } else if (v.getId() == R.id.quit) {
