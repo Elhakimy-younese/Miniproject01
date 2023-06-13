@@ -1,14 +1,17 @@
 package com.example.mini_project01;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -51,15 +54,17 @@ public class Usersadapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.layout_user_item, null);
         TextView tvUsersItemFullname = convertView.findViewById(R.id.tvuseritemFullname);
         TextView tvUsersItemCity = convertView.findViewById(R.id.tvuseritemCity);
-        Button btnDetails = convertView.findViewById(R.id.btndetails);
+        ImageButton btnDetails = convertView.findViewById(R.id.imageButton);
 
         tvUsersItemFullname.setText(user.fullname());
         tvUsersItemCity.setText(user.getCity());
         btnDetails.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(String.format("Details of User %d", position + 1))
-                    .setMessage(user.toString())
-                    .show();
+            Intent intent = new Intent(context, User_Details.class);
+            intent.putExtra("firstname", user.getFirstname());
+            intent.putExtra("lastname", user.getLastname());
+            intent.putExtra("city", user.getCity());
+            intent.putExtra("gender", user.getGender());
+            context.startActivity(intent);
         });
 
 
