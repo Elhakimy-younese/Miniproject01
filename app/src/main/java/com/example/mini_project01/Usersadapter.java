@@ -51,16 +51,24 @@ public class Usersadapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.layout_user_item, null);
         TextView tvUsersItemFullname = convertView.findViewById(R.id.tvuseritemFullname);
         TextView tvUsersItemCity = convertView.findViewById(R.id.tvuseritemCity);
-        Button btnDetails = convertView.findViewById(R.id.btndetails);
 
         tvUsersItemFullname.setText(user.fullname());
         tvUsersItemCity.setText(user.getCity());
-        btnDetails.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(String.format("Details of User %d", position + 1))
-                    .setMessage(user.toString())
-                    .show();
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(String.format("Details of User %d", position + 1))
+                        .setMessage(user.toString())
+                        .show();
+
+                return false;
+            }
         });
+
+
+
 
 
         return convertView;
