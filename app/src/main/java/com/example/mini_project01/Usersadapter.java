@@ -1,6 +1,8 @@
 package com.example.mini_project01;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +38,10 @@ public class Usersadapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.layout_user_item, null);
@@ -48,7 +51,17 @@ public class Usersadapter extends BaseAdapter {
 
         tvUsersItemFullname.setText(users.get(position).fullname());
         tvUsersItemCity.setText(users.get(position).getCity());
-        tvUsersItemGender.setText(users.get(position).getGender());
+
+        tvUsersItemGender.setText(String.format("#%s", getItemId(position)));
+
+        if (users.get(position).getGender().equals("male")){
+            convertView.setBackgroundColor(Color.rgb(173,216,230));
+
+        }
+        else if (users.get(position).getGender().equals("female")) {
+            convertView.setBackgroundColor(Color.rgb(247, 220, 237));
+
+        }
 
 
         return convertView;
