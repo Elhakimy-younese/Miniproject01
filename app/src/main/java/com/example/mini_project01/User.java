@@ -31,4 +31,10 @@ public class User {
     public  String fullname(){
         return String.format("%s %s",firstname, lastname.toUpperCase());
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s | %s | %s",fullname(), gender, city);
+    }
+
 }
