@@ -2,12 +2,14 @@ package com.example.mini_project01;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,15 +57,29 @@ public class Usersadapter extends BaseAdapter {
         tvUsersItemFullname.setText(user.fullname());
         tvUsersItemCity.setText(user.getCity());
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+//        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setTitle(String.format("Details of User %d", position + 1))
+//                        .setMessage(user.toString())
+//                        .show();
+//
+//                return false;
+//            }
+//        });
+        convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(String.format("Details of User %d", position + 1))
-                        .setMessage(user.toString())
-                        .show();
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP){
+                    Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
+                }
 
-                return false;
+
+                return true;
             }
         });
 
