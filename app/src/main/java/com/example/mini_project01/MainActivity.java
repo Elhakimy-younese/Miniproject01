@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private ArrayList<String> getusers() {
-        ArrayList<String> usersFullname = new ArrayList<>();
+    private ArrayList<User> getusers() {
+        ArrayList<User> usersFullname = new ArrayList<>();
 
         try {
             InputStream inputStream = getAssets().open("users.json");
@@ -79,7 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject user = jsonArray.getJSONObject(i);
                 JSONObject username = user.getJSONObject("name");
-                usersFullname.add( String.format("%s %S\n", username.get("first"), username.get("last")));
+//                usersFullname.add( String.format("%s %S\n", username.get("first"), username.get("last")));
+                usersFullname.add(new User(
+                        username.getString("firstname"),
+                        username.getString("lastname"),
+                        user.getString("gender"),
+                        user.getString("city")
+                        ) );
 
 
             }
