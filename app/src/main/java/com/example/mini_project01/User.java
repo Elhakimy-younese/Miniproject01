@@ -34,7 +34,7 @@ public class User {
 
     @Override
     public String toString(){
-        return String.format("%s | %s | %s",fullname(), gender, city);
+        return String.format("Hi i am %s I am %s \nI live in %s",fullname(), gender.equals("male") ? "♂" : "♀", city);
     }
 
 }
