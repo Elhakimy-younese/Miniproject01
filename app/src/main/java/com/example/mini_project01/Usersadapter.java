@@ -1,6 +1,10 @@
 package com.example.mini_project01;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -64,57 +69,42 @@ public class Usersadapter extends BaseAdapter {
         tvUsersItemCity.setText(user.getCity());
 
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+        View finalConvertView = convertView;
+        convertView.setOnTouchListener(new OnSwipeTouchListener(context){
+
+            @SuppressLint("ResourceAsColor")
             @Override
-            public boolean onLongClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setTitle(String.format("Details of User %d", position + 1))
-//                        .setMessage(user.toString())
-//                        .show();
+            public void swipeLeft() {
+                finalConvertView.setBackgroundColor(Color.rgb(247, 235, 237));
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(String.format("Details of User %d", position + 1))
+                        .setMessage("Do you want to delete this user")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                users.remove(position);
+                                notifyDataSetChanged();
 
-                return false;
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finalConvertView.setBackgroundColor(Color.WHITE);
+                            }
+                        })
+                        .show();
+
+
+
             }
+
+
         });
-
-        convertView.setOnTouchListener(new View.OnTouchListener() {
-            long onclick = 0;
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        onclick = System.currentTimeMillis();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        long clickTime = System.currentTimeMillis();
-                        if (clickTime - onclick >= 1000 && clickTime - onclick <= 2000) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle(String.format("Details of User %d", position + 1))
-                                    .setMessage(user.toString())
-                                    .show();
-                        }
-                        break;
-
-                }
-
-
-//                if (event.getAction() == MotionEvent.ACTION_DOWN){
-//                    Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                }
-//                if (event.getAction() == MotionEvent.ACTION_UP){
-//                    Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
-//                }
-
-
-                return true;
-            }
-        });
-
-
 
 
 
         return convertView;
     }
+
+
 }

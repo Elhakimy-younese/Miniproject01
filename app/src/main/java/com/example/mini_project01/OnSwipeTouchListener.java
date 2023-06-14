@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 
 public  class OnSwipeTouchListener implements View.OnTouchListener {
     private Context context;
+    public static int positione1;
+    public static int positione2;
 
     private static  final float THRESHOLD = 100;
     GestureDetector gestureDetector;
@@ -20,13 +22,20 @@ public  class OnSwipeTouchListener implements View.OnTouchListener {
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener{
         @Override
+        public boolean onDown(@NonNull MotionEvent e) {
+            return true;
+        }
+
+        @Override
         public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
-            if (e1.getX() - e2.getX() >= THRESHOLD) {
+            if (e1.getX() - e2.getX() >= THRESHOLD ) {
                 swipeLeft();
             }
             if (e2.getX() - e1.getX() >= THRESHOLD) {
                 swipeRight();
             }
+
+
 
             return super.onFling(e1, e2, velocityX, velocityY);
         }

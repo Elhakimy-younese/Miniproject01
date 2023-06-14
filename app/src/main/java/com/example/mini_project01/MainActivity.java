@@ -1,12 +1,18 @@
 package com.example.mini_project01;
 
+import static com.example.mini_project01.OnSwipeTouchListener.positione1;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button loadusers ;
     TextView quit;
     ListView LvUsers;
+
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +54,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "if you want to leave the app swipe lift", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
     }
 
+
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onClick(View v) {
         if(v == loadusers){
             Usersadapter adapter = new Usersadapter(this, getusers());
 
             LvUsers.setAdapter(adapter);
-
-
+//            LinearLayout linearLayout = new LinearLayout(MainActivity.this);
+//            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+//                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                    LinearLayout.LayoutParams.MATCH_PARENT));
+//            linearLayout.setGravity(Gravity.CENTER);
+//            linearLayout.setOrientation(LinearLayout.VERTICAL);
+//
+//            // Create a ProgressBar
+//            ProgressBar progressBar = new ProgressBar(MainActivity.this, null, android.R.attr.progressBarStyleLarge);
+//            progressBar.setLayoutParams(new LinearLayout.LayoutParams(
+//                    LinearLayout.LayoutParams.WRAP_CONTENT,
+//                    LinearLayout.LayoutParams.WRAP_CONTENT));
+//
+//            // Add the ProgressBar to the LinearLayout
+//            linearLayout.addView(progressBar);
+//
+//            // Set the LinearLayout as the content view of the activity
+//            setContentView(linearLayout);
+//
+//            Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    progressBar.setVisibility(ProgressBar.INVISIBLE);
+//                }
+//            }, 1000);
         }
     }
 
@@ -102,4 +139,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return usersFullname;
     }
-}
+
+
+
+
+        }
+
