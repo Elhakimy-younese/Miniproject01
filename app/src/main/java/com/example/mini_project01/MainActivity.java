@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         username.getString("first"),
                         username.getString("last"),
                         user.getString("gender"),
-                        user.getString("city")
+                        user.getString("city"),
+                        user.getString("image")
                         ) );
 
 

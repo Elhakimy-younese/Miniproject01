@@ -1,12 +1,15 @@
 package com.example.mini_project01;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -19,10 +22,12 @@ public class UserDetailsDialog  extends DialogFragment {
         TextView Firstname = view.findViewById(R.id.tvfirstname);
         TextView Lastname = view.findViewById(R.id.tvlastname);
         TextView City = view.findViewById(R.id.tvCity);
+        ImageView image = view.findViewById(R.id.ivuser);
 
         Firstname.setText(user.getFirstname());
         Lastname.setText(user.getLastname());
         City.setText(user.getCity());
+        image.setImageResource();
 
         if (user.getGender().equals("male"))
             view.setBackgroundColor(Color.parseColor("#ADD8E6"));

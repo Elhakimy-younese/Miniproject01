@@ -6,11 +6,15 @@ public class User {
     private  String gender;
     private  String city;
 
-    public User(String firstname, String lastname, String gender, String city) {
+
+
+    private String image;
+    public User(String firstname, String lastname, String gender, String city, String image) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
         this.city = city;
+        this.image = image;
     }
 
     public String getFirstname() {
@@ -28,6 +32,9 @@ public class User {
     public String getCity() {
         return city;
     }
+    public String getImage() {return image;}
+
+
     public  String fullname(){
         return String.format("%s %s",firstname, lastname.toUpperCase());
     }
