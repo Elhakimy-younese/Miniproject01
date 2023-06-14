@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == loadusers){
-            Usersadapter adapter = new Usersadapter(this, getusers());
-
+            Usersadapter adapter = new Usersadapter(this, getusers(),getSupportFragmentManager());
             LvUsers.setAdapter(adapter);
+
 
 
         }

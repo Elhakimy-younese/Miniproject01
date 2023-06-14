@@ -5,17 +5,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -27,13 +24,14 @@ public class Usersadapter extends BaseAdapter {
     ArrayList<User> users;
 
     LayoutInflater inflater;
+    FragmentManager fragmentManager;
 
 
-
-    public Usersadapter(Context context, ArrayList<User> users) {
+    public Usersadapter(Context context, ArrayList<User> users, FragmentManager fragmentManager) {
         this.users = users;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.fragmentManager = fragmentManager;
 
     }
 
@@ -59,53 +57,49 @@ public class Usersadapter extends BaseAdapter {
         TextView tvUsersItemFullname = convertView.findViewById(R.id.tvuseritemFullname);
         TextView tvUsersItemCity = convertView.findViewById(R.id.tvuseritemCity);
         ImageView checkedimage = convertView.findViewById(R.id.ivitemchecked);
+        Button Details = convertView.findViewById(R.id.btndetails);
 
         tvUsersItemFullname.setText(user.fullname());
         tvUsersItemCity.setText(user.getCity());
 
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setTitle(String.format("Details of User %d", position + 1))
-//                        .setMessage(user.toString())
-//                        .show();
+//        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+////                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+////                builder.setTitle(String.format("Details of User %d", position + 1))
+////                        .setMessage(user.toString())
+////                        .show();
+//
+//                return false;
+//            }
+//        });
 
-                return false;
+        Details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDetailsDialog userDetailsDialog = new UserDetailsDialog(user);
+                userDetailsDialog.show(fragmentManager, null);
             }
         });
 
         convertView.setOnTouchListener(new View.OnTouchListener() {
-            long onclick = 0;
+            long lastClickTime = 0;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        onclick = System.currentTimeMillis();
-                        break;
 
                     case MotionEvent.ACTION_UP:
                         long clickTime = System.currentTimeMillis();
-                        if (clickTime - onclick >= 1000 && clickTime - onclick <= 2000) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle(String.format("Details of User %d", position + 1))
-                                    .setMessage(user.toString())
-                                    .show();
-                        }
+                        long DOUBLE_CLICK_TIMEOUT = 250;
+                        if (clickTime - lastClickTime <= DOUBLE_CLICK_TIMEOUT) {
+                            checkedimage.setVisibility(checkedimage.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
+
+                        }else
+                            lastClickTime = clickTime;
                         break;
 
                 }
-
-
-//                if (event.getAction() == MotionEvent.ACTION_DOWN){
-//                    Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                }
-//                if (event.getAction() == MotionEvent.ACTION_UP){
-//                    Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
-//                }
-
 
                 return true;
             }
