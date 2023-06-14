@@ -1,16 +1,14 @@
 package com.example.mini_project01;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,30 +35,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadusers.setOnClickListener(this);
         quit.setOnClickListener(this);
 
-        GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
+        quit.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
-            public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
-                if (e1.getX() - e2.getX() >= 100) {
-                    finish();
-                }
+            public void swipeLeft() {
+                finish();
 
-                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+
+            @Override
+            public void swipeRight() {
+                Toast.makeText(MainActivity.this, "if you want to leave the app swipe lift", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        quit.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-
-                return false;
-            }
-        });
-
-
-
-
     }
 
     @Override
