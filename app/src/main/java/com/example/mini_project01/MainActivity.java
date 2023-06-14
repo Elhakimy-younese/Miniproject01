@@ -1,15 +1,16 @@
 package com.example.mini_project01;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,20 +21,43 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button loadusers, quit;
+    Button loadusers ;
+    TextView quit;
     ListView LvUsers;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         loadusers = findViewById(R.id.loaduser);
-        quit = findViewById(R.id.quit);
+        quit = findViewById(R.id.tvquit);
         LvUsers = findViewById(R.id.lvusers);
 
         loadusers.setOnClickListener(this);
         quit.setOnClickListener(this);
+
+        GestureDetector gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onFling(@NonNull MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
+                if (e1.getX() - e2.getX() >= 100) {
+                    finish();
+                }
+
+                return super.onFling(e1, e2, velocityX, velocityY);
+            }
+        });
+
+
+        quit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+
+                return false;
+            }
+        });
+
 
 
 
@@ -47,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LvUsers.setAdapter(adapter);
 
 
-        } else if (v.getId() == R.id.quit) {
-            finish();
         }
     }
 

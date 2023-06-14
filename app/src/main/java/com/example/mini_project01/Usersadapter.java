@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class Usersadapter extends BaseAdapter {
 
-    final int DOUBLE_CLICK_TIMEOUT = 225;
+
 
     Context context;
     ArrayList<User> users;
@@ -67,32 +67,33 @@ public class Usersadapter extends BaseAdapter {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(String.format("Details of User %d", position + 1))
-                        .setMessage(user.toString())
-                        .show();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setTitle(String.format("Details of User %d", position + 1))
+//                        .setMessage(user.toString())
+//                        .show();
 
                 return false;
             }
         });
 
         convertView.setOnTouchListener(new View.OnTouchListener() {
-            long lastClickTime = 0;
+            long onclick = 0;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 switch (event.getAction()){
-//                    case MotionEvent.ACTION_DOWN:
-//                        Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        onclick = System.currentTimeMillis();
+                        break;
 
                     case MotionEvent.ACTION_UP:
                         long clickTime = System.currentTimeMillis();
-                        if (clickTime - lastClickTime <= DOUBLE_CLICK_TIMEOUT) {
-                            checkedimage.setVisibility(checkedimage.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
-
-                        }else
-                            lastClickTime = clickTime;
+                        if (clickTime - onclick >= 1000 && clickTime - onclick <= 2000) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle(String.format("Details of User %d", position + 1))
+                                    .setMessage(user.toString())
+                                    .show();
+                        }
                         break;
 
                 }
