@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button loadusers ;
     TextView quit;
+    ProgressBar progressBar;
     ListView LvUsers;
     @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loadusers = findViewById(R.id.loaduser);
         quit = findViewById(R.id.tvquit);
         LvUsers = findViewById(R.id.lvusers);
+        progressBar = findViewById(R.id.progressBar);
 
         loadusers.setOnClickListener(this);
         quit.setOnClickListener(this);
@@ -55,9 +61,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Usersadapter adapter = new Usersadapter(this, getusers());
 
             LvUsers.setAdapter(adapter);
+            progressBar.setVisibility(View.VISIBLE);
+            LvUsers.setVisibility(View.INVISIBLE);
+
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    LvUsers.setVisibility(View.VISIBLE);
+
+                }
+            }, 1000);
 
 
         }
+
     }
 
     private ArrayList<User> getusers() {

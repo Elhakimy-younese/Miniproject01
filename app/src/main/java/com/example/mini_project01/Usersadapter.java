@@ -64,17 +64,17 @@ public class Usersadapter extends BaseAdapter {
         tvUsersItemCity.setText(user.getCity());
 
 
-        convertView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setTitle(String.format("Details of User %d", position + 1))
-//                        .setMessage(user.toString())
-//                        .show();
-
-                return false;
-            }
-        });
+//        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+////                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+////                builder.setTitle(String.format("Details of User %d", position + 1))
+////                        .setMessage(user.toString())
+////                        .show();
+//
+//                return false;
+//            }
+//        });
 
         convertView.setOnTouchListener(new View.OnTouchListener() {
             long onclick = 0;
@@ -98,13 +98,6 @@ public class Usersadapter extends BaseAdapter {
 
                 }
 
-
-//                if (event.getAction() == MotionEvent.ACTION_DOWN){
-//                    Toast.makeText(context, "down", Toast.LENGTH_SHORT).show();
-//                }
-//                if (event.getAction() == MotionEvent.ACTION_UP){
-//                    Toast.makeText(context, "up", Toast.LENGTH_SHORT).show();
-//                }
 
 
                 return true;
