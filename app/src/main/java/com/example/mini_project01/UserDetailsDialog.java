@@ -1,5 +1,6 @@
 package com.example.mini_project01;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class UserDetailsDialog  extends DialogFragment {
     User user;
 
@@ -27,7 +31,8 @@ public class UserDetailsDialog  extends DialogFragment {
         Firstname.setText(user.getFirstname());
         Lastname.setText(user.getLastname());
         City.setText(user.getCity());
-        image.setImageResource();
+        setImageFromAssets(view.getContext(), user.getImage(), image);
+
 
         if (user.getGender().equals("male"))
             view.setBackgroundColor(Color.parseColor("#ADD8E6"));
@@ -49,5 +54,16 @@ public class UserDetailsDialog  extends DialogFragment {
 
     public UserDetailsDialog(User user) {
         this.user = user;
+    }
+
+    private void setImageFromAssets(Context context, String imageName, ImageView imageView) {
+        try {
+            InputStream inputStream = context.getAssets().open( imageName);
+            Drawable drawable = Drawable.createFromStream(inputStream, null);
+            imageView.setImageDrawable(drawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception or provide a fallback image
+        }
     }
 }
